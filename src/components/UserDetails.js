@@ -9,8 +9,7 @@ export default class UserDetails extends React.Component {
     this.state = {
       name: 'Bob',
       comment: '',
-      comments: [{message:'great service',user:'Jeffrey'}, {message:'pretty ok',user:'Jennifer'}],
-      listComments: []
+      comments: [{message:'great service',user:'Jeffrey'}, {message:'pretty ok',user:'Jennifer'}]
     }
 
     this.onNameChange = this.onNameChange.bind(this);
@@ -19,18 +18,25 @@ export default class UserDetails extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    this.listMake()
+    // this.listMake()
   }
-  listMake(event) {
+  listMake(message) {
+
+    const user = this.state.name
+
+    this.setState({
+      comments: [{message, user},  ...this.state.comments]
+    })
+
     
-    if(this.state.comment) {
-      this.state.comments.unshift({message: this.state.comment, user: this.state.name})
-      //try to clear the textbox at some point but idk how
-    }
-    let listComment = this.state.comments.map(comment => 
-      <li>"{comment.message}" <h6>~{comment.user}</h6></li>
-    );
-    this.setState({listComments: listComment})
+    // if(this.state.comment) {
+    //   this.state.comments.unshift({message: this.state.comment, user: this.state.name})
+    //   //try to clear the textbox at some point but idk how
+    // }
+    // let listComment = this.state.comments.map(comment => 
+    //   <li>"{comment.message}" <h6>~{comment.user}</h6></li>
+    // );
+    // this.setState({listComments: listComment})
   }
   handleChange(event) {
     this.setState({comment: event.target.value})
@@ -56,7 +62,14 @@ export default class UserDetails extends React.Component {
         <br/>
         <CommentPrompt onEntry={this.handleChange} onSubmit={this.listMake}/>
         <h1>Comments:</h1>
-        <ul>{this.state.listComments}</ul>
+        <ul>
+          { 
+            this.state.comments.map(c => 
+              <li>"{c.message}" <h6>~{c.user}</h6></li>  
+            )
+          }
+        </ul>
+        
       </div>
     )
   }
