@@ -16,25 +16,26 @@ export default class UserDetails extends React.Component {
     this.onNameChange = this.onNameChange.bind(this);
     this.onRandomName = this.onRandomName.bind(this);
     this.listMake = this.listMake.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     this.listMake()
   }
-  listMake(event) {
+  listMake(message) {
     
-    if(this.state.comment) {
-      this.state.comments.unshift({message: this.state.comment, user: this.state.name})
-      //try to clear the textbox at some point but idk how
-    }
-    let listComment = this.state.comments.map(comment => 
-      <li>"{comment.message}" <h6>~{comment.user}</h6></li>
-    );
+    // if(this.state.comment) {
+    //   this.state.comments.unshift({message: this.state.comment, user: this.state.name})
+    //   //try to clear the textbox at some point but idk how
+    // }
+    // let listComment = this.state.comments.map(comment => 
+    //   <li>"{comment.message}" <h6>~{comment.user}</h6></li>
+    // );
+    
     this.setState({listComments: listComment})
   }
-  handleChange(event) {
-    this.setState({comment: event.target.value})
-  }
+  // handleChange(event) {
+  //   this.setState({comment: event.target.value})
+  // }
   onNameChange(e){
     this.setState({ name: e.target.value })
   }
@@ -54,9 +55,11 @@ export default class UserDetails extends React.Component {
           colors={{ ...COLORS, primary: '#00ff00' }} 
           onNameChange={ this.onRandomName } />
         <br/>
-        <CommentPrompt onEntry={this.handleChange} onSubmit={this.listMake}/>
+        <CommentPrompt onSubmit={this.listMake(message) }/>
         <h1>Comments:</h1>
-        <ul>{this.state.listComments}</ul>
+        <ul>{this.state.comments.map(el => 
+          <li>"{comments}" <h6>~{comment.user}</h6></li>
+        )}</ul>
       </div>
     )
   }
