@@ -13,10 +13,8 @@ export default class UserAvatar extends React.Component {
     return (
       <div>
 
-
         <h1 style={{ color: colors.primary }}>
           {this.props.name ? `${this.props.greeting || 'hi there '} ${this.props.name}!` : 'Hi there!'}
-
         </h1>
 
         <h1>
@@ -26,8 +24,6 @@ export default class UserAvatar extends React.Component {
         <h1>
           <button onClick={this.props.onNameChange}>Change my name!</button>
         </h1>
-
-
 
       </div>
     )
