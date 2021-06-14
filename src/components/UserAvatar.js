@@ -12,11 +12,23 @@ export default class UserAvatar extends React.Component {
     const colors = this.props.colors || COLORS
     return (
       <div>
+
+
         <h1 style={{ color: colors.primary }}>
           {this.props.name ? `${this.props.greeting || 'hi there '} ${this.props.name}!` : 'Hi there!'}
-          <button onClick={this.props.onNameChange}>Change my name!</button>
+
+        </h1>
+
+        <h1>
           <button onClick={this.props.onMessageChange}>Change my message!</button>
         </h1>
+
+        <h1>
+          <button onClick={this.props.onNameChange}>Change my name!</button>
+        </h1>
+
+
+
       </div>
     )
   }
