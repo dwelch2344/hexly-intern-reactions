@@ -22,19 +22,34 @@ export default class CommentPrompt extends React.Component {
         this.props.onSubmit(message)
         this.setState({ comment: '' })
     }
+    handleClear(){
+        localStorage.clear();
+        console.log(localStorage.getItem('commentsArray'));
+
+    }
     render() {
         return (
-            <h1>
-                Leave a comment!<br />
-                <input
-                    value={this.state.comment}
-                    type="text"
-                    style={{ width: "400px", height: "10vh", verticalAlign: 'top' }}
-                    onChange={this.handleChange}
-                    onKeyPress={this.handleEnter}
-                />
-                <button onClick={this.handleClick}>submit</button>
-            </h1>
+            <div>
+                <h1>
+                    Leave a comment!<br />
+                    <input
+                        value={this.state.comment}
+                        type="text"
+                        style={{ width: "400px", height: "10vh", verticalAlign: 'top' }}
+                        onChange={this.handleChange}
+                        onKeyPress={this.handleEnter}
+                    />
+                </h1>
+                <h1>
+                    <button onClick={this.handleClick}>Submit Comments</button>
+
+                </h1>
+
+                <h1>
+                    <button onClick={this.handleClear}>Clear Comments</button>
+
+                </h1>
+            </div>
         );
     }
 }

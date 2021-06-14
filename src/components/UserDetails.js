@@ -17,10 +17,10 @@ export default class UserDetails extends React.Component {
     this.listMake = this.listMake.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     const raw = localStorage.getItem('commentsArray')
     let comments = []
-    if( raw ){
+    if (raw) {
       comments = JSON.parse(raw)
     }
 
