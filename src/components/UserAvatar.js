@@ -2,8 +2,8 @@ import React from 'react';
 
 
 export const COLORS = {
-  primary: "#800000",
-  secondary: "#0000ff",
+  primary: "#ffffff",
+  secondary: "#ffffff",
 }
 
 export default class UserAvatar extends React.Component {
@@ -14,7 +14,7 @@ export default class UserAvatar extends React.Component {
       <div>
 
         <h1 style={{ color: colors.primary }}>
-          {this.props.name ? `${this.props.greeting || 'hi there '} ${this.props.name}!` : 'Hi there!'}
+          {this.props.name ? `${this.props.message || 'hi there '} ${this.props.name}!` : 'Hi there!'}
         </h1>
 
         <h1>
@@ -22,7 +22,7 @@ export default class UserAvatar extends React.Component {
         </h1>
 
         <h1>
-          <button onClick={this.props.onNameChange}>Change my name!</button>
+          <button onClick={this.props.onNameChange}>Change User</button>
         </h1>
 
       </div>

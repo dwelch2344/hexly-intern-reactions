@@ -7,15 +7,22 @@ export default class UserDetails extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: 'alan',
-
       comments: [{ message: 'great service', user: 'Jeffrey' }, { message: 'pretty ok', user: 'Jennifer' }]
     }
 
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onRandomName = this.onRandomName.bind(this);
+    // this.onNameChange = this.onNameChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.listMake = this.listMake.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
+  }
+  componentDidMount(){
+    const raw = localStorage.getItem('commentsArray')
+    let comments = []
+    if( raw ){
+      comments = JSON.parse(raw)
+    }
+
+    this.setState({ comments })
   }
   listMake(message) {
     // OPTION a: update the variable of "comments"
@@ -27,32 +34,41 @@ export default class UserDetails extends React.Component {
     // comments.push({ message, user: this.state.user }) // adds to end
     comments.unshift({ message, user: this.state.name })
     this.setState({ comments })
+    localStorage.setItem('commentsArray', JSON.stringify(this.state.comments));
+    console.log(localStorage.getItem('commentsArray'));
   }
   // handleChange(event) {
   //   this.setState({comment: event.target.value})
   // }
-  onNameChange(e) {
-    this.setState({ name: e.target.value })
+  handleNameChange() {
+    let name = this.state.name === 'alan' ? 'logan' : 'alan'
+    this.setState({ name })
+    // this.setState({ name: e.target.value })
   }
   handleMessage() {
     let message = this.state.message === 'yo' ? 'hi there' : 'yo'
-    this.setState({message})
+    this.setState({ message })
     // this.setState({ message: e.target.value })
   }
-  onRandomName() {
-    this.setState({ name: this.state.name + '!' })
-  }
+  // onRandomName() {
+  //   this.setState({ name: this.state.name + '!' })
+  // }
 
   render() {
     return (
       <div>
         Hey Users!
         <br />
-        <input type="text" value={this.state.name} onChange={this.onNameChange} />
+        <input type="text"
+          value={this.state.name}
+          onChange={this.handleNameChange} />
 
-        <UserAvatar greeting={this.state.message} onMessageChange={this.handleMessage} name={this.state.name}
-          colors={{ ...COLORS /*,primary: '#00ff00' */ }}
-          onNameChange={this.onRandomName} />
+        <UserAvatar message={this.state.message}
+          onMessageChange={this.handleMessage}
+          // colors={{ ...COLORS /*,primary: '#00ff00' */ }}
+          name={this.state.name}
+          onNameChange={this.handleNameChange} />
+
         <br />
         <CommentPrompt onSubmit={this.listMake} />
         <h1>Comments:</h1>
