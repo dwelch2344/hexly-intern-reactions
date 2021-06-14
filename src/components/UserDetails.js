@@ -16,6 +16,8 @@ export default class UserDetails extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.listMake = this.listMake.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
+    this.handleClear = this.handleClear.bind(this);
+    this.storeData = this.storeData.bind(this);
   }
   componentDidMount() {
     const raw = localStorage.getItem('commentsArray')
@@ -26,7 +28,11 @@ export default class UserDetails extends React.Component {
 
     this.setState({ comments })
   }
+  storeData(data) {
+    localStorage.setItem('userData',data.target.value)
+  }
   listMake(message) {
+    console.log({message})
     // OPTION a: update the variable of "comments"
     // let comments = this.state.comments
     // comments = [{message, user: this.state.name},...comments]
@@ -42,8 +48,9 @@ export default class UserDetails extends React.Component {
   // handleChange(event) {
   //   this.setState({comment: event.target.value})
   // }
-  handleNameChange() {
-    let name = this.state.name === 'alan' ? 'logan' : 'alan'
+  handleNameChange(e) {
+    //let name = this.state.name === 'alan' ? 'logan' : 'alan'
+    let name = e.target.value
     this.setState({ name })
     // this.setState({ name: e.target.value })
   }
@@ -55,7 +62,10 @@ export default class UserDetails extends React.Component {
   // onRandomName() {
   //   this.setState({ name: this.state.name + '!' })
   // }
-
+  handleClear() {
+    let comments = [];
+    this.setState({comments})
+  }
   render() {
     return (
       <div>
@@ -69,10 +79,11 @@ export default class UserDetails extends React.Component {
           onMessageChange={this.handleMessage}
           // colors={{ ...COLORS /*,primary: '#00ff00' */ }}
           name={this.state.name}
-          onNameChange={this.handleNameChange} />
-
+          onChange={this.storeData}
+          />
+        <h1>{localStorage.getItem('userData')}</h1>
         <br />
-        <CommentPrompt onSubmit={this.listMake} />
+        <CommentPrompt onClear={this.handleClear} onSubmit={this.listMake} />
         <h1>Comments:</h1>
         <ul>{this.state.comments.map(comment =>
           <li>"{comment.message}" <h6>~{comment.user}</h6></li>

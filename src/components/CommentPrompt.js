@@ -3,10 +3,11 @@ import React from 'react';
 export default class CommentPrompt extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { comment: '' }
+        this.state = { comment: null }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
+        this.handleClear = this.handleClear.bind(this);
     }
     handleChange(event) {
         this.setState({ comment: event.target.value })
@@ -24,6 +25,7 @@ export default class CommentPrompt extends React.Component {
     }
     handleClear(){
         localStorage.clear();
+        this.props.onClear();
         console.log(localStorage.getItem('commentsArray'));
 
     }
