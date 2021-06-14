@@ -7,7 +7,7 @@ export default class UserDetails extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      name: 'Bobhgf',
+      name: 'Bob',
       comments: [{message:'great service',user:'Jeffrey'}, {message:'pretty ok',user:'Jennifer'}]
     }
 
