@@ -17,6 +17,7 @@ export default class UserDetails extends React.Component {
     this.handleMessage = this.handleMessage.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.storeData = this.storeData.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   componentDidMount() {
     const recipeUrl = 'http://localhost:3000/comments';
@@ -30,8 +31,7 @@ export default class UserDetails extends React.Component {
     localStorage.setItem('userData',data.target.value)
   }
   listMake(message) {
-    console.log({ message })
-    const recipeUrl = 'http://localhost:3000/comments';
+    const commentURL = 'http://localhost:3000/comments';
     const postBody = {
         message,
         user: this.state.name
@@ -44,14 +44,41 @@ export default class UserDetails extends React.Component {
         body: JSON.stringify(postBody)
     };
 
-    fetch(recipeUrl, requestMetadata)
+    fetch(commentURL, requestMetadata)
         .then(res => res.json())
         .then( (comment) => {
-            console.log(comment);
             const comments = this.state.comments
             comments.unshift(comment);
             this.setState({ comments });
         });
+  }
+  handleDelete(id, e) {
+    const commentURL = 'http://localhost:3000/comments';
+    const postBody = {
+      id
+    };
+    const requestMetadata = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postBody)
+    };
+
+    fetch(commentURL, requestMetadata)
+      .then(res => res.json())
+      .then(deletedComment => {
+        console.log({deletedComment})
+        const _comments = this.state.comments
+        console.log({_comments})
+        const indexToDelete = _comments.findIndex(comment => comment.id === deletedComment.id)
+        if(indexToDelete === -1) {
+          console.warn(`comment not found with id: #${deletedComment.id}`)
+          return
+        }
+        _comments.splice(indexToDelete, 1)
+        this.setState({comments: _comments})
+      })
   }
   handleNameChange(e) {
     let name = e.target.value
@@ -84,7 +111,7 @@ export default class UserDetails extends React.Component {
         <CommentPrompt onClear={this.handleClear} onSubmit={this.listMake} />
         <h1>Comments:</h1>
         <ul>{this.state.comments.map(comment =>
-          <li>"{comment.message}" <h6>~{comment.user}</h6></li>
+          <li key={comment.id}>"{comment.message}" {comment.user === this.state.name ? <button onClick={this.handleDelete.bind(this, comment.id)}>Delete Comment</button> : null}<h6>~{comment.user}</h6></li>
         )}</ul>
       </div>
     )
