@@ -9,7 +9,7 @@ export default class UserDetails extends React.Component {
     this.state = {
       name: 'alan',
       bro: 'true',
-      comments: [{ message: 'great service', user: 'Jeffrey' }, { message: 'pretty ok', user: 'Jennifer' }]
+      comments: []
     }
 
     // this.onNameChange = this.onNameChange.bind(this);
@@ -20,30 +20,59 @@ export default class UserDetails extends React.Component {
     this.storeData = this.storeData.bind(this);
   }
   componentDidMount() {
-    const raw = localStorage.getItem('commentsArray')
-    let comments = []
-    if (raw) {
-      comments = JSON.parse(raw)
-    }
+    const recipeUrl = 'http://localhost:3000/comments';
+    fetch(recipeUrl)
+        .then(res => res.json())
+        .then( ({comments}) => {
+          // console.log(comments)
+          this.setState({ comments });
+        });
+    // const raw = localStorage.getItem('commentsArray')
+    // let comments = []
+    // if (raw) {
+    //   comments = JSON.parse(raw)
+    // }
 
-    this.setState({ comments })
+    // this.setState({ comments })
   }
   storeData(data) {
     localStorage.setItem('userData',data.target.value)
   }
   listMake(message) {
-    console.log({message})
+    console.log({ message })
+    const recipeUrl = 'http://localhost:3000/comments';
+    const postBody = {
+        message,
+        user: this.state.name
+    };
+    const requestMetadata = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postBody)
+    };
+
+    fetch(recipeUrl, requestMetadata)
+        .then(res => res.json())
+        .then( (comment) => {
+            console.log(comment);
+            const comments = this.state.comments
+            comments.unshift(comment);
+            this.setState({ comments });
+        });
+    // console.log({message})
     // OPTION a: update the variable of "comments"
     // let comments = this.state.comments
     // comments = [{message, user: this.state.name},...comments]
 
     // OPTION b: change the contents of variable "comments"
-    const comments = this.state.comments
-    // comments.push({ message, user: this.state.user }) // adds to end
-    comments.unshift({ message, user: this.state.name })
-    this.setState({ comments })
-    localStorage.setItem('commentsArray', JSON.stringify(this.state.comments));
-    console.log(localStorage.getItem('commentsArray'));
+    // const comments = this.state.comments
+    // // comments.push({ message, user: this.state.user }) // adds to end
+    // comments.unshift({ message, user: this.state.name })
+    // this.setState({ comments })
+    // localStorage.setItem('commentsArray', JSON.stringify(this.state.comments));
+    // console.log(localStorage.getItem('commentsArray'));
   }
   // handleChange(event) {
   //   this.setState({comment: event.target.value})
