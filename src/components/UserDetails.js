@@ -76,8 +76,11 @@ export default class UserDetails extends React.Component {
           console.warn(`comment not found with id: #${deletedComment.id}`)
           return
         }
-        _comments.splice(indexToDelete, 1)
-        this.setState({comments: _comments})
+        return fetch(commentURL, {method: 'GET', headers: {'Content-Type': 'application/json'}})
+      })
+      .then(res => res.json())
+      .then(({comments}) => {
+        this.setState({comments})
       })
   }
   handleNameChange(e) {
