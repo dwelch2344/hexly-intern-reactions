@@ -12,7 +12,6 @@ export default class UserDetails extends React.Component {
       comments: []
     }
 
-    // this.onNameChange = this.onNameChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.listMake = this.listMake.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
@@ -24,16 +23,8 @@ export default class UserDetails extends React.Component {
     fetch(recipeUrl)
         .then(res => res.json())
         .then( ({comments}) => {
-          // console.log(comments)
           this.setState({ comments });
         });
-    // const raw = localStorage.getItem('commentsArray')
-    // let comments = []
-    // if (raw) {
-    //   comments = JSON.parse(raw)
-    // }
-
-    // this.setState({ comments })
   }
   storeData(data) {
     localStorage.setItem('userData',data.target.value)
@@ -61,36 +52,15 @@ export default class UserDetails extends React.Component {
             comments.unshift(comment);
             this.setState({ comments });
         });
-    // console.log({message})
-    // OPTION a: update the variable of "comments"
-    // let comments = this.state.comments
-    // comments = [{message, user: this.state.name},...comments]
-
-    // OPTION b: change the contents of variable "comments"
-    // const comments = this.state.comments
-    // // comments.push({ message, user: this.state.user }) // adds to end
-    // comments.unshift({ message, user: this.state.name })
-    // this.setState({ comments })
-    // localStorage.setItem('commentsArray', JSON.stringify(this.state.comments));
-    // console.log(localStorage.getItem('commentsArray'));
   }
-  // handleChange(event) {
-  //   this.setState({comment: event.target.value})
-  // }
   handleNameChange(e) {
-    //let name = this.state.name === 'alan' ? 'logan' : 'alan'
     let name = e.target.value
     this.setState({ name })
-    // this.setState({ name: e.target.value })
   }
   handleMessage() {
     let message = this.state.message === 'yo' ? 'hi there' : 'yo'
     this.setState({ message })
-    // this.setState({ message: e.target.value })
   }
-  // onRandomName() {
-  //   this.setState({ name: this.state.name + '!' })
-  // }
   handleClear() {
     let comments = [];
     this.setState({comments})
@@ -106,7 +76,6 @@ export default class UserDetails extends React.Component {
 
         <UserAvatar message={this.state.message}
           onMessageChange={this.handleMessage}
-          // colors={{ ...COLORS /*,primary: '#00ff00' */ }}
           name={this.state.name}
           onChange={this.storeData}
           />

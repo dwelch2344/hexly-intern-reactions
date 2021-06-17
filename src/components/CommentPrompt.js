@@ -24,10 +24,7 @@ export default class CommentPrompt extends React.Component {
         this.setState({ comment: '' })
     }
     handleClear(){
-        localStorage.clear();
         this.props.onClear();
-        console.log(localStorage.getItem('commentsArray'));
-
     }
     render() {
         return (
