@@ -20,8 +20,8 @@ export default class UserDetails extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
   componentDidMount() {
-    const recipeUrl = 'http://localhost:3000/comments';
-    fetch(recipeUrl)
+    const commentURL = 'http://localhost:3000/comments';
+    fetch(commentURL)
         .then(res => res.json())
         .then( ({comments}) => {
           this.setState({ comments });
