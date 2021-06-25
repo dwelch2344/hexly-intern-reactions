@@ -96,6 +96,12 @@ export default class UserDetails extends React.Component {
     this.setState({comments})
   }
   render() {
+    let leaveComment;
+    if (this.props.loggedIn) {
+      leaveComment = <CommentPrompt onClear={this.handleClear} onSubmit={this.listMake} />
+    } else {
+      leaveComment = <h1>Login to leave a comment!</h1>
+    }
     return (
       <div>
         Hey Users!
@@ -111,7 +117,7 @@ export default class UserDetails extends React.Component {
           />
         <h1>{localStorage.getItem('userData')}</h1>
         <br />
-        <CommentPrompt onClear={this.handleClear} onSubmit={this.listMake} />
+        {leaveComment}
         <h1>Comments:</h1>
         <ul>{this.state.comments.map(comment =>
           <li key={comment.id}>"{comment.message}" {comment.user === this.state.name ? <button onClick={this.handleDelete.bind(this, comment.id)}>Delete Comment</button> : null}<h6>~{comment.user}</h6></li>

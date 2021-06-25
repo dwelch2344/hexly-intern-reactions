@@ -1,6 +1,6 @@
 import React from 'react';
 import userEnter from './UserDetails';
-
+import LoginPrompt from './LoginPrompt';
 export const COLORS = {
   primary: "#ffffff",
   secondary: "#ffffff",
